@@ -6,12 +6,15 @@ describe('Testing Salary Changes', () => {
     //cy.get('#R28150311755517846793_heading').should("contain", "Sample Cards")
     cy.get('#R14180646276384366438_heading').should("contain", "Sample Approvals")
     //Login with the username setup in environment variables
+    cy.wait(200)
     var userName = Cypress.env("demoUserName")
     cy.get('#P9999_USERNAME').type(userName)
+    cy.wait(200)
     //Use an environment variable defined in cypress.json so password is not exposed
     //The false log ensures the password is not printed on the cypress test runner
     var passWord = Cypress.env("demoPassWord")
     cy.get('#P9999_PASSWORD').type(passWord, {log: false})
+    cy.wait(200)
     //Test Invalid login credentials
     //cy.get('#P9999_PASSWORD').type("test")
     //Click the Sign In button
@@ -23,12 +26,13 @@ describe('Testing Salary Changes', () => {
     cy.get('.t-HeroRegion-title').should("contain", "Sample Approvals")
     cy.get('#R15427996399105931258_heading').should("contain", "About This App")
     //Click on Hamburger menu
-    cy.get('#t_Button_navControl').click()
+    cy.get('#t_Button_navControl').click({force: true})
     cy.wait(200)
     //Click on My Employees link
-    cy.get('#t_TreeNav_2 > .a-TreeView-content > .a-TreeView-label').click()
+    cy.get('#t_TreeNav_2 > .a-TreeView-content > .a-TreeView-label').click({force: true})
+    cy.get('[data-id="2"] > .a-CardView > .a-CardView-header > .a-CardView-headerBody > .a-CardView-title').should("contain", "BLAKE")
     //Click on the Salary Change button
-    cy.get('[data-id="3"] > .a-CardView > .a-CardView-actions > .a-CardView-actionsPrimary > :nth-child(1)').click()
+    cy.get('[data-id="2"] > .a-CardView > .a-CardView-actions > .a-CardView-actionsPrimary > :nth-child(1)').click()
     //Verify Salary Change form is displayed
     cy.get('.ui-dialog-titlebar').should("contain", "Request Salary Change")
     cy.wait(200)
@@ -38,7 +42,7 @@ describe('Testing Salary Changes', () => {
     cy.selectIframe().find('#B14184004972934004582').click()
     cy.wait(200)
     //Verify the Salary change was submitted and branched back to correct page
-    cy.get('#t_TreeNav_4 > .a-TreeView-content > .a-TreeView-label').click()
+    cy.get('#t_TreeNav_4 > .a-TreeView-content > .a-TreeView-label').click({force: true})
     cy.wait(200)
     cy.get(".t-Breadcrumb-label").should("contain", "My Requests")
   })
